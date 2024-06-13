@@ -220,14 +220,6 @@ for each_datapath in dataset_paths:
         f'This image contains a icon integrated into a background, where elements of the background contribute to forming the logo. Identify the logo that is represented in the image by choosing exclusively among the following options:{logo_string},{simple_string}, {complex_string} Provide your response by stating only the single, most accurate class name that represents the logo. You have to respond with a single word.',
         f'This image contains an icon integrated into a background, where elements of the background contribute to forming the logo. Identify the background that is represented in the image by choosing exclusively among the following options:{logo_string},{simple_string}, {complex_string}. Provide your response by stating only the single, most accurate class name that represents the background. You have to respond with a single word.'
     
-        
-        
-        # f"Review the object in the image and determine its category, choosing exclusively from the following options:{logo_string}, {simple_string}, {complex_string}. Provide your response by stating only the single, most accurate class name that represents the object's shape.(YOU HAVE TO RESPONSE A SINGLE WORD).",
-        # f"Review the background in the image and determine its category, choosing exclusively from the following options:{logo_string}, {simple_string}, {complex_string}. Provide your response by stating only the single, most accurate class name that represents the object's background.(YOU HAVE TO RESPONSE A SINGLE WORD)."
-        # "Please indicate the shape of this Image."
-    #     "USER: <image>\nAnalyze the object's silhouette in the provided image. Which of the following categories does it belong to? Choose only one: adidas, apple, bmw, benz, google, instagram, nike, playstation, puma,telegram. Respond with the single term that best matches the object's shape.(YOU HAVE TO RESPONSE A SINGLE WORD)\nASSISTANT:",
-    #     "USER: <image>\nConsider the primary object depicted in this image. Based on its geometric form, select its correct classification from this list: adidas, apple, bmw, benz, google, instagram, nike, playstation, puma,telegram. Give your answer as a single, specific category name.(YOU HAVE TO RESPONSE A SINGLE WORD)\nASSISTANT:",
-    #     "USER: <image>\nExamine the primary object in the image carefully. Identify its category from the following options, ensuring you choose only one: adidas, apple, bmw, benz, google, instagram, nike, playstation, puma,telegram. Your answer should be the one class name that accurately describes the object's outline.(YOU HAVE TO RESPONSE A SINGLE WORD)\nASSISTANT:"
     ]
 
 
