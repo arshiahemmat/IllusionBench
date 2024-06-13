@@ -282,167 +282,27 @@ for each_datapath in dataset_paths:
     logo_string = ', '.join(logo_classes)
     icon_string = ', '.join(Icon_dataset)
 
-
     sin_prompts = [
-
-        f'This image contains an object integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        object options: [{sin_string}]
-        Identify the object that is represented in the image by choosing
-        among the provided options. Provide your response by stating only
-        the single, most accurate option that represents the object in the
-        image. You have to respond with a single word.',
-
-
-
-        f'This image contains an object integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        object options: [{sin_string}]
-        Identify the background that is represented in the image by choosing
-        among the provided options. Provide your response by stating only
-        the single, most accurate option that represents the background in
-        the image. You have to respond with a single word.',
-
-        f'This image contains an object integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        object options: [{sin_string}]
-        Identify BOTH the background AND the object that are represented
-        in the image by choosing among the provided options. Provide your
-        response by stating only the single, most accurate options that
-        represent the background and the object in the image respectively.
-        You have to respond with two words, one predicting the background and
-        one predicting the object'
+        f'This image contains a icon integrated into a background, where elements of the background contribute to forming the icon. Identify the shape that is represented in the image by choosing exclusively among the following options:{sin_string},{simple_string}, {complex_string} Provide your response by stating only the single, most accurate class name that represents the icon. You have to respond with a single word.',
+        f'This image contains an icon integrated into a background, where elements of the background contribute to forming the icon. Identify the background that is represented in the image by choosing exclusively among the following options:{sin_string},{simple_string}, {complex_string}. Provide your response by stating only the single, most accurate class name that represents the background. You have to respond with a single word.'
 
 
     ]
 
 
-
     icon_prompts = [
-       f'This image contains an icon integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        icon options: [{icon_string}]
-        Identify the icon that is represented in the image by choosing
-        among the provided options. Provide your response by stating only
-        the single, most accurate option that represents the icon in the
-        image. You have to respond with a single word.',
+        f'This image contains a icon integrated into a background, where elements of the background contribute to forming the icon. Identify the icon that is represented in the image by choosing exclusively among the following options:{icon_string},{simple_string}, {complex_string} Provide your response by stating only the single, most accurate class name that represents the icon. You have to respond with a single word.',
+        f'This image contains an icon integrated into a background, where elements of the background contribute to forming the icon. Identify the background that is represented in the image by choosing exclusively among the following options:{icon_string},{simple_string}, {complex_string}. Provide your response by stating only the single, most accurate class name that represents the background. You have to respond with a single word.'
 
-
-
-        f'This image contains an icon integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        icon options: [{icon_string}]
-        Identify the background that is represented in the image by choosing
-        among the provided options. Provide your response by stating only
-        the single, most accurate option that represents the background in
-        the image. You have to respond with a single word.',
-
-        f'This image contains an icon integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        icon options: [{icon_string}]
-        Identify BOTH the background AND the icon that are represented
-        in the image by choosing among the provided options. Provide your
-        response by stating only the single, most accurate options that
-        represent the background and the icon in the image respectively.
-        You have to respond with two words, one predicting the background and
-        one predicting the icon'
 
     ]
 
     logo_prompts = [
-
-
-        f'This image contains a logo integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        logo options: [{logo_string}]
-        Identify the logo that is represented in the image by choosing
-        among the provided options. Provide your response by stating only
-        the single, most accurate option that represents the logo in the
-        image. You have to respond with a single word.',
-
-
-
-        f'This image contains a logo integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        logo options: [{logo_string}]
-        Identify the background that is represented in the image by choosing
-        among the provided options. Provide your response by stating only
-        the single, most accurate option that represents the background in
-        the image. You have to respond with a single word.',
-
-        f'This image contains a logo integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{background_string}]
-        logo options: [{logo_string}]
-        Identify BOTH the background AND the logo that are represented
-        in the image by choosing among the provided options. Provide your
-        response by stating only the single, most accurate options that
-        represent the background and the logo in the image respectively.
-        You have to respond with two words, one predicting the background and
-        one predicting the logo'
-
-
+        
+        f'This image contains a icon integrated into a background, where elements of the background contribute to forming the logo. Identify the logo that is represented in the image by choosing exclusively among the following options:{logo_string},{simple_string}, {complex_string} Provide your response by stating only the single, most accurate class name that represents the logo. You have to respond with a single word.',
+        f'This image contains an icon integrated into a background, where elements of the background contribute to forming the logo. Identify the background that is represented in the image by choosing exclusively among the following options:{logo_string},{simple_string}, {complex_string}. Provide your response by stating only the single, most accurate class name that represents the background. You have to respond with a single word.'
+    
     ]
-
-
-    old_sin_prompts = [
-
-
-        f'This image contains an object integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{old_sin_target_string}]
-        object options: [{old_sin_target_string}]
-        Identify the object that is represented in the image by choosing
-        among the provided options. Provide your response by stating only
-        the single, most accurate option that represents the object in the
-        image. You have to respond with a single word.',
-
-
-
-        f'This image contains an object integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{old_sin_target_string}]
-        object options: [{old_sin_target_string}]
-        Identify the background that is represented in the image by choosing
-        among the provided options. Provide your response by stating only
-        the single, most accurate option that represents the background in
-        the image. You have to respond with a single word.',
-
-        f'This image contains an object integrated into a
-        background, where elements of the background contribute to forming
-        the image.
-        background options: [{old_sin_target_string}]
-        object options: [{old_sin_target_string}]
-        Identify BOTH the background AND the object that are represented
-        in the image by choosing among the provided options. Provide your
-        response by stating only the single, most accurate options that
-        represent the background and the object in the image respectively.
-        You have to respond with two words, one predicting the background and
-        one predicting the object'
-
-
-
-    ]
-
 
     if data_name == 'old_sin':
         prompts = old_sin_prompts
