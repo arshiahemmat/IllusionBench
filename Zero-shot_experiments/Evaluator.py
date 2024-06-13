@@ -304,6 +304,14 @@ for each_datapath in dataset_paths:
     
     ]
 
+    old_sin_prompts = [
+    
+        
+        f'This image contains a icon integrated into a background, where elements of the background contribute to forming the icon. Identify the icon that is represented in the image by choosing exclusively among the following options:{old_sin_target_string},{simple_string}, {complex_string} Provide your response by stating only the single, most accurate class name that represents the icon. You have to respond with a single word.',
+        f'This image contains an icon integrated into a background, where elements of the background contribute to forming the icon. Identify the background that is represented in the image by choosing exclusively among the following options:{old_sin_target_string},{simple_string}, {complex_string}. Provide your response by stating only the single, most accurate class name that represents the background. You have to respond with a single word.'
+    
+    ]
+
     if data_name == 'old_sin':
         prompts = old_sin_prompts
     elif data_name == 'icon':
