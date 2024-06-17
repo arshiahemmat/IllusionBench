@@ -24,7 +24,7 @@
 
 ### 🔥 Zero-shot Evaluation performance on the different cutting-edge models
 <p align="center">
-<img src="assets/otal_plot_shape_v15-1.png" width=55%>
+<img src="assets/Total_plot_shape_v15-1.png" width=55%>
 </p>
 
 ### 🔥 In-context learning Evaluation performance on the different cutting-edge models
