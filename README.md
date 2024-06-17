@@ -16,7 +16,7 @@
 
 ### 📝 Dataset Samples
 
-<div class="image-container">
+<div class="image-container" , align="center">
   <img src="assets/4.png" width="40%">
   <img src="assets/5.png" width="40%">
 </div>
