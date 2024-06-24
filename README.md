@@ -2,7 +2,9 @@
 [[Data]](https://huggingface.co/datasets/arshiahemmat/IllusionBench)
 
 Codebase for ICL experiments for our paper `Hidden in Plain Sight: Evaluating Abstract Shape
-Recognition in Vision-Language Models'. The code base heavily adapts from the code used within
+Recognition in Vision-Language Models'. 
+
+The code base heavily adapts from the code used within
 the paper `VL-ICL Bench: The Devil in the Details of Benchmarking Multimodal In-Context Learning
 ([arXiv:2403.13164 PDF](https://arxiv.org/pdf/2403.13164)) - ([link to original repo](https://github.com/ys-zong/VL-ICL/tree/main)). The the VL-ICL Bench paper is also
 given below.
