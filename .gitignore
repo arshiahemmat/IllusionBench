@@ -26,3 +26,5 @@ archive
 LLaVA
 archive_new
 run.sh
+plotting.py
+plotting.ipynb

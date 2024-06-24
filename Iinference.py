@@ -32,6 +32,8 @@ from utils.constants import (
     MESSAGES_BOTH_TASKS,
     MESSAGES_DATA_FOLDER,
     MESSAGES_DOMAINS,
+    MODELS,
+    ALL_TASKS,
 )
 from utils.utils import load, load_logo_conditioning, load_messages
 
@@ -50,78 +52,13 @@ def parse_args():
         default=["operator_induction"],
         type=str,
         nargs="+",
-        choices=[
-            "operator_induction",
-            "textocr",
-            "open_mi",
-            "clevr",
-            "operator_induction_interleaved",
-            "matching_mi",
-            "logos_neither",
-            "logos_logo",
-            "logos_background",
-            "logos_both",
-            "logos_conditioning",
-            "sin_conditioning",
-            "logos_background_neither",
-            "logos_background_logo",
-            "logos_background_background",
-            "logos_background_both",
-            "logos_both_neither",
-            "logos_both_logo",
-            "logos_both_background",
-            "logos_both_both",
-            "sin_neither",
-            "sin_object",
-            "sin_background",
-            "sin_both",
-            "sin_background_neither",
-            "sin_background_object",
-            "sin_background_background",
-            "sin_background_both",
-            "sin_both_neither",
-            "sin_both_object",
-            "sin_both_background",
-            "sin_both_both",
-            "icons_neither",
-            "icons_icon",
-            "icons_background",
-            "icons_both",
-            "icons_background_neither",
-            "icons_background_icon",
-            "icons_background_background",
-            "icons_background_both",
-            "icons_both_neither",
-            "icons_both_icon",
-            "icons_both_background",
-            "icons_both_both",
-            "icons_conditioning",
-            "messages_conditioning",
-            "messages_neither",
-            "messages_message",
-            "messages_background",
-            "messages_both",
-            "messages_background_neither",
-            "messages_background_message",
-            "messages_background_background",
-            "messages_background_both",
-            "messages_both_neither",
-            "messages_both_message",
-            "messages_both_background",
-            "messages_both_both",
-        ],
+        choices=ALL_TASKS,
         help="List of datasets.",
     )
     parser.add_argument(
         "--engine",
         "-e",
-        choices=[
-            "otter-mpt",
-            "llava16-7b",
-            "qwen-vl-chat",
-            "idefics-9b-instruct",
-            "mmicl-t5-xxl",
-        ],
+        choices=MODELS,
         default=["llava16-7b"],
         nargs="+",
     )
@@ -207,6 +144,7 @@ def eval_questions(
             dataset = load_messages(MESSAGES_DATA_FOLDER, eval_dataset)
 
     elif (
+        # Load condiitonig dataset for inital dataset exploration.
         eval_dataset == "logos_conditioning"
         or eval_dataset == "sin_conditioning"
         or eval_dataset == "icons_conditioning"
@@ -260,8 +198,6 @@ def eval_questions(
                 query_meta.append(query)
 
     print(f"Running inference for {n_shot} on {eval_dataset} for {args.engine}...")
-
-    print(len(query_meta))
 
     for idx, query in enumerate(query_meta):
         if idx % 250 == 0:

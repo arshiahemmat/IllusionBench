@@ -87,11 +87,6 @@ def icl_inference(
     img_id = query["image"]
     query_images, query_image_paths = load_image(img_id, data_path)
 
-    print("Query image",img_id)
-    for i in range(len(n_shot_support)):
-        print("Support image",n_shot_support[i]["image"])
-    print("__________")
-
     if dataset not in DATASETS and "conditioning" not in dataset:
         query_text = query["question"]
 

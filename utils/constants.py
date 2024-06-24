@@ -86,31 +86,11 @@ ICONS_BOTH_TASKS = [
     "icons_both_both",
 ]
 
-MESSAGES_TASKS = [
-    "messages_neither",
-    "messages_message",
-    "messages_background",
-    "messages_both",
-]
-
-MESSAGES_BACKGROUND_TASKS = [
-    "messages_background_neither",
-    "messages_background_message",
-    "messages_background_background",
-    "messages_background_both",
-]
-
-MESSAGES_BOTH_TASKS = [
-    "messages_both_neither",
-    "messages_both_message",
-    "messages_both_background",
-    "messages_both_both",
-]
 
 ALL_LOGOS_TASKS = LOGOS_TASKS + LOGOS_BACKGROUND_TASKS + LOGOS_BOTH_TASKS
 ALL_SIN_TASKS = SIN_TASKS + SIN_BACKGROUND_TASKS + SIN_BOTH_TASKS
 ALL_ICONS_TASKS = ICONS_TASKS + ICONS_BACKGROUND_TASKS + ICONS_BOTH_TASKS
-ALL_MESSAGE_TASKS = MESSAGES_TASKS + MESSAGES_BACKGROUND_TASKS + MESSAGES_BOTH_TASKS
+ALL_TASKS = ALL_LOGOS_TASKS + ALL_SIN_TASKS + ALL_ICONS_TASKS
 
 
 # LOGOS = [
@@ -193,20 +173,6 @@ SIN = [
 
 ICONS = ["animal", "face_emoji", "music", "sport", "stationary", "vehicle"]
 
-MESSAGES = [
-    "APP",
-    "BAT",
-    "BUT",
-    "EAR",
-    "ICE",
-    "KIT",
-    "PIN",
-    "RAT",
-    "RIB",
-    "SEA",
-    "WIND",
-]
-
 
 LOGOS_DATA_FOLDER = "/homes/55/arshia/illusion-diffusion/illusion_generation/logo/"
 
@@ -226,7 +192,6 @@ CONDITIONING_IMAGES_SIN = "/homes/55/arshia/illusion-diffusion/Sin/ICON/"
 
 CONDITIONING_IMAGES_ICONS = "/homes/55/arshia/illusion-diffusion/Icon_dataset"
 
-CONDITIONING_IMAGES_MESSAGES = "/homes/55/arshia/illusion-diffusion/Message_dataset"
 
 MODELS = [
     "otter-mpt",
