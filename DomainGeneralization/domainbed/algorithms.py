@@ -166,10 +166,6 @@ class CLIPERM(CLIP):
         
         for param in self.clip_model.parameters():
             param.requires_grad = False
-            
-        # # Get all layers of the model
-        # layers = list(self.clip_model.children())
-        # print(layers)
 
         for name, param in self.clip_model.transformer.named_parameters():
             if "proj" in name:
@@ -203,24 +199,6 @@ class CLIPERM(CLIP):
 class CLIPMixUp(CLIPERM):
     def __init__(self, input_shape, num_classes, num_domains, hparams, sentence_prompt=False):
         super(CLIPMixUp, self).__init__(input_shape, num_classes, num_domains, hparams)
-        
-        # for param in self.clip_model.parameters():
-        #     param.requires_grad = False
-            
-        # # Get all layers of the model
-        # layers = list(self.clip_model.children())
-        # print(layers)
-
-        # for name, param in self.clip_model.transformer.named_parameters():
-        #     if "proj" in name:
-        #         param.requires_grad = True
-
-                
-        # self.optimizer = torch.optim.Adam(
-        #     self.clip_model.parameters(),
-        #     lr=self.hparams["lr"],
-        #     weight_decay=self.hparams['weight_decay']
-        # )
 
     def update(self, minibatches, unlabeled=None):
         objective = 0
@@ -250,19 +228,6 @@ class CLIPMixUp(CLIPERM):
 class CLIPRegMixUp(CLIPERM):
     def __init__(self, input_shape, num_classes, num_domains, hparams, sentence_prompt=False):
         super(CLIPRegMixUp, self).__init__(input_shape, num_classes, num_domains, hparams)
-        
-        # for param in self.clip_model.parameters():
-        #     param.requires_grad = True
-                    
-        # for name, param in self.clip_model.transformer.named_parameters():
-        #     if "proj" in name:
-        #         param.requires_grad = True
-
-        # self.optimizer = torch.optim.Adam(
-        #     self.clip_model.parameters(),
-        #     lr=self.hparams["lr"],
-        #     weight_decay=self.hparams['weight_decay']
-        # )
 
     def mixup_data(self, x, y, alpha=1.0, beta=1.0):
 
@@ -1030,33 +995,6 @@ class SagNet(Algorithm):
             self.network_f.n_outputs,
             num_classes,
             self.hparams['nonlinear_classifier'])
-
-        # # This commented block of code implements something closer to the
-        # # original paper, but is specific to ResNet and puts in disadvantage
-        # # the other algorithms.
-        # resnet_c = networks.Featurizer(input_shape, self.hparams)
-        # resnet_s = networks.Featurizer(input_shape, self.hparams)
-        # # featurizer network
-        # self.network_f = torch.nn.Sequential(
-        #         resnet_c.network.conv1,
-        #         resnet_c.network.bn1,
-        #         resnet_c.network.relu,
-        #         resnet_c.network.maxpool,
-        #         resnet_c.network.layer1,
-        #         resnet_c.network.layer2,
-        #         resnet_c.network.layer3)
-        # # content network
-        # self.network_c = torch.nn.Sequential(
-        #         resnet_c.network.layer4,
-        #         resnet_c.network.avgpool,
-        #         networks.Flatten(),
-        #         resnet_c.network.fc)
-        # # style network
-        # self.network_s = torch.nn.Sequential(
-        #         resnet_s.network.layer4,
-        #         resnet_s.network.avgpool,
-        #         networks.Flatten(),
-        #         resnet_s.network.fc)
 
         def opt(p):
             return torch.optim.Adam(p, lr=hparams["lr"],
