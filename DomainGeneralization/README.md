@@ -1,10 +1,13 @@
 ## Get Started
 
-### Process SIN data into DG format
+### Step1: Prepare Environment
 
-'''
-python clean_sin.py
-'''
+``` pip install -r requirements.txt ```
+
+### Process SIN data into required DG format
+
+``` python clean_sin.py ```
+
 
 ### Run Domain Generalization
 
