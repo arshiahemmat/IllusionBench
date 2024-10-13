@@ -4,7 +4,9 @@
 
 ``` pip install -r requirements.txt ```
 
-### Process SIN data into required DG format
+### Step2: Process Illusion-IN data into the required DG format
+
+Please specify the path to your generated Illusion-IN in ```root```.
 
 ``` python clean_sin.py ```
 
