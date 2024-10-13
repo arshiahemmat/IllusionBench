@@ -1,3 +1,4 @@
+
 ## Get Started
 
 ### Step1: Prepare Environment
@@ -16,3 +17,6 @@ Please specify the path to your generated Illusion-IN in ```root```.
 '''
 bash run.sh
 '''
+
+### Acknowledgement
+This codebase is based on  DomainBed (https://github.com/facebookresearch/DomainBed) and DPLCLIP (https://github.com/shogi880/DPLCLIP). We thank the authors of DomainBed and DPLCLIP for their great codebase.
