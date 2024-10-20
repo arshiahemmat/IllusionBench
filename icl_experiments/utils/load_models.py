@@ -3,219 +3,114 @@ import torch
 
 
 def load_i2t_model(engine, args=None):
+    """Load the specified I2T model based on the engine type and return the model, tokenizer, and processor."""
+    
+    device = args.engine_device if args else "cuda:0"
+    dtype = torch.bfloat16  # Set default torch dtype for all models
+
     if engine == "otter-mpt":
-        from otter_ai import OtterForConditionalGeneration
-
-        model = OtterForConditionalGeneration.from_pretrained(
-            "luodian/OTTER-Image-MPT7B", torch_dtype=torch.bfloat16
-        ).to(args.engine_device)
-        tokenizer = model.text_tokenizer
-        image_processor = transformers.CLIPImageProcessor()
-        processor = image_processor
-        trainable_params = sum(p.numel() for p in model.parameters())
-        print(f"Number of trainable parameters: {trainable_params}")
+        return _load_otter_mpt_model(device, dtype)
+    
     elif engine == "mmicl-t5-xxl":
-        from instructblip import (
-            InstructBlipConfig,
-            InstructBlipForConditionalGeneration,
-            InstructBlipProcessor,
-        )
-        model_type = "instructblip"
-        model_ckpt = "BleachNick/MMICL-Instructblip-T5-xxl"
-        processor_ckpt = "Salesforce/instructblip-flan-t5-xxl"
-        config = InstructBlipConfig.from_pretrained(model_ckpt)
-
-        if "instructblip" in model_type:
-            model = InstructBlipForConditionalGeneration.from_pretrained(
-                model_ckpt, config=config
-            ).to(args.engine_device, dtype=torch.bfloat16)
-
-            # Print number of trainable parameters of the model
-            
-
-        processor = InstructBlipProcessor.from_pretrained(processor_ckpt)
-        tokenizer = processor.tokenizer
-    elif engine == "mmicl-t5-xl":
-        from instructblip import (
-            InstructBlipConfig,
-            InstructBlipForConditionalGeneration,
-            InstructBlipProcessor,
-        )
-
-        model_type = "instructblip"
-        model_ckpt = "BleachNick/MMICL-Instructblip-T5-xl"
-        processor_ckpt = "Salesforce/instructblip-flan-t5-xl"
-        config = InstructBlipConfig.from_pretrained(model_ckpt)
-
-        if "instructblip" in model_type:
-            model = InstructBlipForConditionalGeneration.from_pretrained(
-                model_ckpt, config=config
-            ).to(args.engine_device, dtype=torch.bfloat16)
-
-
-        processor = InstructBlipProcessor.from_pretrained(processor_ckpt)
-        tokenizer = processor.tokenizer
-
-    elif engine == "otter-llama":
-        from otter_ai import OtterForConditionalGeneration
-
-        model = OtterForConditionalGeneration.from_pretrained(
-            "luodian/OTTER-9B-LA-InContext",
-            torch_dtype=torch.bfloat16,
-        ).to(args.engine_device)
-        tokenizer = model.text_tokenizer
-        image_processor = transformers.CLIPImageProcessor()
-        processor = image_processor
+        return _load_mmicl_t5_xxl_model(device, dtype)
+    
     elif engine == "llava16-7b":
-        from llava.model.builder import load_pretrained_model as load_llava_model
-
-        tokenizer, model, image_processor, context_len = load_llava_model(
-            model_path="liuhaotian/llava-v1.6-vicuna-7b",
-            model_base=None,
-            device_map=args.engine_device,
-            model_name="llava",
-            torch_dtype=torch.bfloat16,
-        )
-        model = model.to(args.engine_device)
-        processor = image_processor
-
+        return _load_llava16_7b_model(device, dtype, args)
+    
     elif engine == "qwen-vl-chat":
-        from transformers.generation import GenerationConfig
-
-        tokenizer = transformers.AutoTokenizer.from_pretrained(
-            "Qwen/Qwen-VL-Chat", trust_remote_code=True
-        )
-        model = (
-            transformers.AutoModelForCausalLM.from_pretrained(
-                "Qwen/Qwen-VL-Chat",
-                trust_remote_code=True,
-                torch_dtype=torch.bfloat16,
-                low_cpu_mem_usage=True,
-            )
-            .eval()
-            .to(args.engine_device)
-        )
-        model.generation_config = GenerationConfig.from_pretrained(
-            "Qwen/Qwen-VL-Chat", trust_remote_code=True
-        )
-        processor = None
-
+        return _load_qwen_model("Qwen/Qwen-VL-Chat", device, dtype)
+    
     elif engine == "qwen-vl":
-        from transformers.generation import GenerationConfig
-
-        tokenizer = transformers.AutoTokenizer.from_pretrained(
-            "Qwen/Qwen-VL", trust_remote_code=True
-        )
-        model = (
-            transformers.AutoModelForCausalLM.from_pretrained(
-                "Qwen/Qwen-VL",
-                trust_remote_code=True,
-                torch_dtype=torch.bfloat16,
-                low_cpu_mem_usage=True,
-            )
-            .eval()
-            .to(args.engine_device)
-        )
-        model.generation_config = GenerationConfig.from_pretrained(
-            "Qwen/Qwen-VL", trust_remote_code=True
-        )
-        processor = None
-    elif engine == "internlm-x2":
-        model = transformers.AutoModel.from_pretrained(
-            "internlm/internlm-xcomposer2-7b",
-            trust_remote_code=True,
-            torch_dtype=torch.bfloat16,
-            low_cpu_mem_usage=True,
-        ).to(args.engine_device)
-        tokenizer = transformers.AutoTokenizer.from_pretrained(
-            "internlm/internlm-xcomposer2-7b", trust_remote_code=True
-        )
-        model.tokenizer = tokenizer
-        processor = None
-    elif engine == "openflamingo":
-        from open_flamingo import create_model_and_transforms
-
-        model, processor, tokenizer = create_model_and_transforms(
-            clip_vision_encoder_path="ViT-L-14",
-            clip_vision_encoder_pretrained="openai",
-            lang_encoder_path="anas-awadalla/mpt-7b",
-            tokenizer_path="anas-awadalla/mpt-7b",
-            cross_attn_every_n_layers=4,
-        )
-        model = model.to(torch.bfloat16).to(args.engine_device)
-
-    elif engine == "emu2-chat":
-        from accelerate import (
-            init_empty_weights,
-            infer_auto_device_map,
-            load_checkpoint_and_dispatch,
-        )
-
-        tokenizer = transformers.AutoTokenizer.from_pretrained("BAAI/Emu2-Chat")
-        with init_empty_weights():
-            model = transformers.AutoModelForCausalLM.from_pretrained(
-                "BAAI/Emu2-Chat",
-                low_cpu_mem_usage=True,
-                torch_dtype=torch.bfloat16,
-                trust_remote_code=True,
-            ).eval()
-
-        # adjust according to your device
-        device_map = infer_auto_device_map(
-            model,
-            max_memory={0: "38GiB", 1: "38GiB", 2: "38GiB", 3: "38GiB"},
-            no_split_module_classes=["Block", "LlamaDecoderLayer"],
-        )
-        device_map["model.decoder.lm.lm_head"] = 0
-
-        model = load_checkpoint_and_dispatch(
-            model,
-            "/scratch/local/ssd/tomlamb/hub/models--BAAI--Emu2-Chat/snapshots/20ea30b04f8fee599cf97535e655c200df728501",
-            device_map=device_map,
-        ).eval()
-        processor = None
-
+        return _load_qwen_model("Qwen/Qwen-VL", device, dtype)
+    
     elif engine == "idefics-9b-instruct":
-        from transformers import IdeficsForVisionText2Text, AutoProcessor
-
-        checkpoint = "HuggingFaceM4/idefics-9b-instruct"
-        model = IdeficsForVisionText2Text.from_pretrained(
-            checkpoint,
-            torch_dtype=torch.bfloat16,
-            low_cpu_mem_usage=True,
-        ).to(args.engine_device)
-        processor = AutoProcessor.from_pretrained(checkpoint)
-        tokenizer = processor.tokenizer
-    elif engine == "idefics-9b":
-        from transformers import IdeficsForVisionText2Text, AutoProcessor
-
-        checkpoint = "HuggingFaceM4/idefics-9b"
-        model = IdeficsForVisionText2Text.from_pretrained(
-            checkpoint,
-            torch_dtype=torch.bfloat16,
-            low_cpu_mem_usage=True,
-        ).to(args.engine_device)
-        processor = AutoProcessor.from_pretrained(checkpoint)
-        tokenizer = processor.tokenizer
-    elif engine == "idefics-80b-instruct":
-        from transformers import IdeficsForVisionText2Text, AutoProcessor
-        from accelerate import (
-            init_empty_weights,
-            infer_auto_device_map,
-            load_checkpoint_and_dispatch,
-        )
-
-        checkpoint = "HuggingFaceM4/idefics-80b-instruct"
-        model = IdeficsForVisionText2Text.from_pretrained(
-            checkpoint,
-            torch_dtype=torch.bfloat16,
-            device_map="auto",
-            low_cpu_mem_usage=True,
-        )
-        processor = AutoProcessor.from_pretrained(checkpoint)
-        tokenizer = processor.tokenizer
-    elif engine == "gpt4v":
-        model, tokenizer, processor = None, None, None
+        return _load_idefics_model(device, dtype)
+    
     else:
-        raise NotImplementedError
+        raise NotImplementedError(f"Engine {engine} not recognized.")
+
+
+def _load_otter_mpt_model(device, dtype):
+    """Load and return the Otter-MPT model, tokenizer, and processor."""
+    from otter_ai import OtterForConditionalGeneration
+
+    model = OtterForConditionalGeneration.from_pretrained(
+        "luodian/OTTER-Image-MPT7B", torch_dtype=dtype
+    ).to(device)
+    tokenizer = model.text_tokenizer
+    image_processor = transformers.CLIPImageProcessor()
+    
+    # Print the number of trainable parameters
+    trainable_params = sum(p.numel() for p in model.parameters())
+    print(f"Number of trainable parameters: {trainable_params}")
+    
+    return model, tokenizer, image_processor
+
+
+def _load_mmicl_t5_xxl_model(device, dtype):
+    """Load and return the MMICL-T5-XXL model, tokenizer, and processor."""
+    from instructblip import InstructBlipConfig, InstructBlipForConditionalGeneration, InstructBlipProcessor
+
+    model_ckpt = "BleachNick/MMICL-Instructblip-T5-xxl"
+    processor_ckpt = "Salesforce/instructblip-flan-t5-xxl"
+    
+    config = InstructBlipConfig.from_pretrained(model_ckpt)
+    model = InstructBlipForConditionalGeneration.from_pretrained(
+        model_ckpt, config=config
+    ).to(device, dtype=dtype)
+    
+    processor = InstructBlipProcessor.from_pretrained(processor_ckpt)
+    tokenizer = processor.tokenizer
+
+    return model, tokenizer, processor
+
+
+def _load_llava16_7b_model(device, dtype, args):
+    """Load and return the LLAVA-16-7B model, tokenizer, and processor."""
+    from llava.model.builder import load_pretrained_model as load_llava_model
+
+    tokenizer, model, image_processor, context_len = load_llava_model(
+        model_path="liuhaotian/llava-v1.6-vicuna-7b",
+        model_base=None,
+        device_map=args.engine_device,
+        model_name="llava",
+        torch_dtype=dtype,
+    )
+    
+    model = model.to(device)
+    
+    return model, tokenizer, image_processor
+
+
+def _load_qwen_model(model_name, device, dtype):
+    """Load and return the Qwen-VL or Qwen-VL-Chat model, tokenizer, and generation configuration."""
+    from transformers.generation import GenerationConfig
+
+    tokenizer = transformers.AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+    model = transformers.AutoModelForCausalLM.from_pretrained(
+        model_name,
+        trust_remote_code=True,
+        torch_dtype=dtype,
+        low_cpu_mem_usage=True,
+    ).eval().to(device)
+
+    model.generation_config = GenerationConfig.from_pretrained(model_name, trust_remote_code=True)
+
+    return model, tokenizer, None  # No processor for Qwen models
+
+
+def _load_idefics_model(device, dtype):
+    """Load and return the IDEFICS-9B-INSTRUCT model, tokenizer, and processor."""
+    from transformers import IdeficsForVisionText2Text, AutoProcessor
+
+    checkpoint = "HuggingFaceM4/idefics-9b-instruct"
+    model = IdeficsForVisionText2Text.from_pretrained(
+        checkpoint,
+        torch_dtype=dtype,
+        low_cpu_mem_usage=True,
+    ).to(device)
+    
+    processor = AutoProcessor.from_pretrained(checkpoint)
+    tokenizer = processor.tokenizer
+
     return model, tokenizer, processor

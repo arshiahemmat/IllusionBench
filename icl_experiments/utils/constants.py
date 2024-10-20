@@ -1,17 +1,8 @@
-# Define the tasks within the benchmark that are tradional classification tasks.
-CLASSIFICATION_TASKS = ["matching_mi"]
+# Simple scenes for the benchmark.
+SIMPLE_SCENES = ["ocean", "origami", "forest", "cloud", "sand_dune"]
 
-# Define the tokens that are used for the classification tasks.
-MATCHING_MI_TOKENS = ["No", "Yes"]
-
-# Indices for the classification tokens.
-MATCHING_MI_INDEX = {"No": 0, "Yes": 1}
-
-# Dictionary of classification token indices based on the dataset.
-CLASSIFICATION_TOKEN_INDICES = {"matching_mi": MATCHING_MI_INDEX}
-
-SIMPLE_DOMAINS = ["ocean", "origami", "forest", "cloud", "sand_dune"]
-COMPLEX_DOMAINS = [
+# Complex scenes for the benchmark.
+COMPLEX_SCENES = [
     "medieval_Village",
     "city",
     "underwater_ruins",
@@ -19,108 +10,146 @@ COMPLEX_DOMAINS = [
     "bazaar_market",
     "time_square",
 ]
-DOMAINS = SIMPLE_DOMAINS + COMPLEX_DOMAINS
 
-MESSAGES_DOMAINS = ["city", "forest", "island", "village", "bazaar_market"]
+# Combine simple and complex scenes into a single list.
+SCENES = SIMPLE_SCENES + COMPLEX_SCENES
 
-LOGOS_TASKS = [
-    "logos_neither",
-    "logos_logo",
-    "logos_background",
-    "logos_both",
-]
-LOGOS_BACKGROUND_TASKS = [
-    "logos_background_neither",
-    "logos_background_logo",
-    "logos_background_background",
-    "logos_background_both",
+
+# LOGOS dataset tasks split into various categories based on ICL context.
+# The final word after the underscore indicates whether the image context includes the logo, the scene, both, or neither.
+LOGOS_TC_TASKS = [
+    "logos_tc_icl_neither",
+    "logos_tc_icl_object",
+    "logos_tc_icl_scene",
+    "logos_tc_icl_both",
 ]
 
-LOGOS_BOTH_TASKS = [
-    "logos_both_neither",
-    "logos_both_logo",
-    "logos_both_background",
-    "logos_both_both",
+LOGOS_TS_TASKS = [
+    "logos_ts_icl_neither",
+    "logos_ts_icl_object",
+    "logos_ts_icl_scene",
+    "logos_ts_icl_both",
 ]
 
-SIN_TASKS = [
-    "sin_neither",
-    "sin_object",
-    "sin_background",
-    "sin_both",
+LOGOS_TCS_TASKS = [
+    "logos_tcs_icl_neither",
+    "logos_tcs_icl_object",
+    "logos_tcs_icl_scene",
+    "logos_tcs_icl_both",
 ]
 
-SIN_BACKGROUND_TASKS = [
-    "sin_background_neither",
-    "sin_background_object",
-    "sin_background_background",
-    "sin_background_both",
+# IN dataset tasks split into categories similar to LOGOS.
+IN_TC_TASKS = [
+    "in_tc_icl_neither",
+    "in_tc_icl_object",
+    "in_tc_icl_scene",
+    "in_tc_icl_both",
 ]
 
-SIN_BOTH_TASKS = [
-    "sin_both_neither",
-    "sin_both_object",
-    "sin_both_background",
-    "sin_both_both",
+IN_TS_TASKS = [
+    "in_ts_icl_neither",
+    "in_ts_icl_object",
+    "in_ts_icl_scene",
+    "in_ts_icl_both",
 ]
 
-
-ICONS_TASKS = [
-    "icons_neither",
-    "icons_icon",
-    "icons_background",
-    "icons_both",
+IN_TCS_TASKS = [
+    "in_tcs_icl_neither",
+    "in_tcs_icl_object",
+    "in_tcs_icl_scene",
+    "in_tcs_icl_both",
 ]
 
-ICONS_BACKGROUND_TASKS = [
-    "icons_background_neither",
-    "icons_background_icon",
-    "icons_background_background",
-    "icons_background_both",
+# ICONS dataset tasks split into categories similar to LOGOS and IN.
+ICONS_TC_TASKS = [
+    "icons_tc_icl_neither",
+    "icons_tc_icl_object",
+    "icons_tc_icl_scene",
+    "icons_tc_icl_both",
 ]
 
-ICONS_BOTH_TASKS = [
-    "icons_both_neither",
-    "icons_both_icon",
-    "icons_both_background",
-    "icons_both_both",
+ICONS_TS_TASKS = [
+    "icons_ts_icl_neither",
+    "icons_ts_icl_object",
+    "icons_ts_icl_scene",
+    "icons_ts_icl_both",
 ]
 
+ICONS_TCS_TASKS = [
+    "icons_tcs_icl_neither",
+    "icons_tcs_icl_object",
+    "icons_tcs_icl_scene",
+    "icons_tcs_icl_both",
+]
+    
 
-ALL_LOGOS_TASKS = LOGOS_TASKS + LOGOS_BACKGROUND_TASKS + LOGOS_BOTH_TASKS
-ALL_SIN_TASKS = SIN_TASKS + SIN_BACKGROUND_TASKS + SIN_BOTH_TASKS
-ALL_ICONS_TASKS = ICONS_TASKS + ICONS_BACKGROUND_TASKS + ICONS_BOTH_TASKS
-ALL_TASKS = ALL_LOGOS_TASKS + ALL_SIN_TASKS + ALL_ICONS_TASKS
+# Combine all tasks for each dataset into separate lists for easy reference.
+ALL_LOGOS_TASKS = LOGOS_TC_TASKS + LOGOS_TS_TASKS + LOGOS_TCS_TASKS
+ALL_IN_TASKS = IN_TC_TASKS + IN_TS_TASKS + IN_TCS_TASKS
+ALL_ICONS_TASKS = ICONS_TC_TASKS + ICONS_TS_TASKS + ICONS_TCS_TASKS
+
+# Combine tasks from all datasets into a single list of all tasks.
+ALL_TASKS = ALL_LOGOS_TASKS + ALL_IN_TASKS + ALL_ICONS_TASKS
 
 
-# LOGOS = [
-#     "adidas",
-#     "amazon",
-#     "benz",
-#     "facebook",
-#     "google",
-#     "ibm",
-#     "linkedin",
-#     "mcdonalds",
-#     "apple",
-#     "bmw",
-#     "nike",
-#     "audi",
-#     "instagram",
-#     "playstation",
-#     "puma",
-#     "nasa",
-#     "olympics",
-#     "pepsi",
-#     "spotify",
-#     "starbucks",
-#     "reebok",
-#     "telegram",
-#     "tesla",
-#     "ubuntu",
-# ]
+ICL_BOTH_TASKS = [
+    "logos_tc_icl_both",
+    "logos_ts_icl_both",
+    "logos_tcs_icl_both",
+    "in_tc_icl_both",
+    "in_ts_icl_both",
+    "in_tcs_icl_both",
+    "icons_tc_icl_both",
+    "icons_ts_icl_both",
+    "icons_tcs_icl_both",
+]
 
-# Logos all models recognise (that they recognise the conditioning image)
+ICL_SCENE_TASKS = [
+    "logos_tc_icl_scene",
+    "logos_ts_icl_scene",
+    "logos_tcs_icl_scene",
+    "in_tc_icl_scene",
+    "in_ts_icl_scene",
+    "in_tcs_icl_scene",
+    "icons_tc_icl_scene",
+    "icons_ts_icl_scene",
+    "icons_tcs_icl_scene",
+]
+
+ICL_SHAPE_TASKS = [
+    "logos_tc_icl_object",
+    "logos_ts_icl_object",
+    "logos_tcs_icl_object",
+    "in_tc_icl_object",
+    "in_ts_icl_object",
+    "in_tcs_icl_object",
+    "icons_tc_icl_object",
+    "icons_ts_icl_object",
+    "icons_tcs_icl_object",
+]
+
+ICL_NEITHER_TASKS = [
+    "logos_tc_icl_neither",
+    "logos_ts_icl_neither",
+    "logos_tcs_icl_neither",
+    "in_tc_icl_neither",
+    "in_ts_icl_neither",
+    "in_tcs_icl_neither",
+    "icons_tc_icl_neither",
+    "icons_ts_icl_neither",
+    "icons_tcs_icl_neither",
+]
+ 
+
+# Task dictionary, mapping dataset names to their task lists.
+TASKS = {
+    "logos": ALL_LOGOS_TASKS,
+    "in": ALL_IN_TASKS,
+    "icons": ALL_ICONS_TASKS
+}
+
+
+# Logos that all models are expected to recognize during conditioning.
 LOGOS = [
     "adidas",
     "mcdonalds",
@@ -134,26 +163,8 @@ LOGOS = [
     "tesla",
 ]
 
-# SIN = [
-#     "airplane",
-#     "bicycle",
-#     "bird",
-#     "bottle",
-#     "car",
-#     "cat",
-#     "dog",
-#     "dolphin",
-#     "fork",
-#     "guitar",
-#     "mug",
-#     "panda",
-#     "paper_clip",
-#     "sailboat",
-#     "scooter",
-#     "teapot",
-# ]
-
-SIN = [
+# Object classes within the IN dataset.
+IN = [
     "airplane",
     "bicycle",
     "bird",
@@ -171,28 +182,24 @@ SIN = [
     "teapot",
 ]
 
+# Icon classes within the ICONS dataset (representing high-level concepts).
 ICONS = ["animal", "face_emoji", "music", "sport", "stationary", "vehicle"]
 
 
+# Directory paths for datasets used in the tasks (LOGOS, IN, ICONS).
 LOGOS_DATA_FOLDER = "/homes/55/arshia/illusion-diffusion/illusion_generation/logo/"
-
-SIN_DATA_FOLDER = "/homes/55/arshia/illusion-diffusion/illusion_generation/sin/"
-
+IN_DATA_FOLDER = "/homes/55/arshia/illusion-diffusion/illusion_generation/in/"
 ICON_DATA_FOLDER = "/homes/55/arshia/illusion-diffusion/illusion_generation/icon/"
 
-MESSAGES_DATA_FOLDER = (
-    "/homes/55/arshia/illusion-diffusion/illusion_generation/secret_message/other/"
-)
-
+# Paths to conditioning images for various datasets (LOGOS, IN, ICONS).
 CONDITIONING_IMAGES_LOGOS = (
     "/homes/55/arshia/illusion-diffusion/Logo_dataset/ICON/ICON/"
 )
-
-CONDITIONING_IMAGES_SIN = "/homes/55/arshia/illusion-diffusion/Sin/ICON/"
-
+CONDITIONING_IMAGES_IN = "/homes/55/arshia/illusion-diffusion/in/ICON/"
 CONDITIONING_IMAGES_ICONS = "/homes/55/arshia/illusion-diffusion/Icon_dataset"
 
 
+# List of model engine names to be used in the benchmark tasks.
 MODELS = [
     "otter-mpt",
     "llava16-7b",
@@ -201,10 +208,12 @@ MODELS = [
     "mmicl-t5-xxl",
 ]
 
+# Number of reruns for the inference process (used for repetition to ensure stability of results).
 NUM_RERUNS = 1
 
+# Dataset sizes for various benchmarks (number of examples in each dataset).
 DATASET_SIZES = {
     "icons": 20064,
     "logos": 2860,
-    "sin": 6435
+    "in": 6435
 }
