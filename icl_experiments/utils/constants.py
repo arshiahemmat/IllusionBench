@@ -186,17 +186,17 @@ IN = [
 ICONS = ["animal", "face_emoji", "music", "sport", "stationary", "vehicle"]
 
 
-# Directory paths for datasets used in the tasks (LOGOS, IN, ICONS).
-LOGOS_DATA_FOLDER = "/homes/55/arshia/illusion-diffusion/illusion_generation/logo/"
-IN_DATA_FOLDER = "/homes/55/arshia/illusion-diffusion/illusion_generation/in/"
-ICON_DATA_FOLDER = "/homes/55/arshia/illusion-diffusion/illusion_generation/icon/"
+# Directory paths for datasets used in the tasks (LOGOS, IN, ICONS). ADD THESE IN IF MANUALLY DOWNLOADED THE DATASET.
+LOGOS_DATA_FOLDER = ""
+IN_DATA_FOLDER = ""
+ICON_DATA_FOLDER = ""
 
 # Paths to conditioning images for various datasets (LOGOS, IN, ICONS).
 CONDITIONING_IMAGES_LOGOS = (
-    "/homes/55/arshia/illusion-diffusion/Logo_dataset/ICON/ICON/"
+    ""
 )
-CONDITIONING_IMAGES_IN = "/homes/55/arshia/illusion-diffusion/in/ICON/"
-CONDITIONING_IMAGES_ICONS = "/homes/55/arshia/illusion-diffusion/Icon_dataset"
+CONDITIONING_IMAGES_IN = ""
+CONDITIONING_IMAGES_ICONS = ""
 
 
 # List of model engine names to be used in the benchmark tasks.
